@@ -51,6 +51,8 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            max-width: 100%;
+            width: 100%;
         }
 
         .navbar-brand, .nav-link {
@@ -78,6 +80,7 @@
             align-items: center;
             text-align: center;
             padding: 3rem 1rem;
+            max-height: 50vh;
         }
 
         .hero-section h1 {
@@ -110,32 +113,74 @@
         }
 
         .carousel-section {
-            padding: 2rem 1rem;
-            max-width: 100%;
+            position: relative;
+            width: 100%;
+            max-height: 70vh;
+            overflow: hidden;
+            padding-bottom: 3rem; /* Пространство для кнопки */
         }
 
         .carousel-inner {
-            border-radius: 15px;
-            overflow: hidden;
+            width: 100%;
             max-height: 70vh;
         }
 
         .carousel-item img {
             width: 100%;
-            height: auto;
+            height: 70vh;
             object-fit: cover;
-            border-radius: 15px;
+            border-radius: 0;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            filter: brightness(0) invert(1);
+        }
+
+        .gallery-button {
+            position: relative;
+            display: block;
+            margin: 1rem auto 0; /* Центрирование кнопки с отступом сверху */
+            z-index: 10;
+            transition: transform 0.3s ease; /* Плавное увеличение */
+        }
+
+        .gallery-button:hover {
+            transform: scale(1.1); /* Увеличение на 10% при наведении */
+        }
+
+        .modal-content {
+            background: rgba(28, 37, 38, 0.9);
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
         }
 
         @media (max-width: 768px) {
+            .carousel-item img {
+                height: 40vh;
+            }
             .carousel-inner {
-                max-height: 50vh;
+                max-height: 40vh;
+            }
+            .carousel-section {
+                max-height: 40vh;
             }
         }
 
         @media (max-width: 576px) {
+            .carousel-item img {
+                height: 30vh;
+            }
             .carousel-inner {
-                max-height: 40vh;
+                max-height: 30vh;
+            }
+            .carousel-section {
+                max-height: 30vh;
             }
         }
 
@@ -276,7 +321,49 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+        <button class="btn btn-primary gallery-button" data-bs-toggle="modal" data-bs-target="#fullScreenGallery">Открыть галерею</button>
     </section>
+
+    <!-- Модальное окно для полноэкранной галереи -->
+    <div class="modal fade" id="fullScreenGallery" tabindex="-1" aria-labelledby="fullScreenGalleryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fullScreenGalleryLabel" style="color: #D4AF37; font-family: 'Planet Kosmos', sans-serif;">Галерея Barbershop37</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: brightness(0) invert(1);"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="fullScreenCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="pics/gallery1.jpg" class="d-block" alt="Галерея 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="pics/gallery2.jpg" class="d-block" alt="Галерея 2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="pics/gallery3.jpg" class="d-block" alt="Галерея 3">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="pics/gallery4.jpg" class="d-block" alt="Галерея 4">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="pics/gallery5.jpg" class="d-block" alt="Галерея 5">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="divider"></div>
 
@@ -331,11 +418,20 @@
         // Инициализация карты
         const map = L.map('map').setView([55.7759, 37.4807], 15); // Координаты: Мневники, 21, Москва
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
         L.marker([55.7759, 37.4807]).addTo(map)
             .bindPopup('Barbershop37<br>ул. Мневники, 21, Москва')
             .openPopup();
+
+        // Настройка интервала для полноэкранной карусели (5 секунд)
+        const fullScreenCarousel = document.querySelector('#fullScreenCarousel');
+        if (fullScreenCarousel) {
+            const bsFullScreenCarousel = new bootstrap.Carousel(fullScreenCarousel, {
+                interval: 5000,
+                wrap: true
+            });
+        }
     </script>
 </body>
 </html>
