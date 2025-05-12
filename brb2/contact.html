@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5">
+    <title>Контакты - Barbershop37</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Planet Kosmos';
+            src: url('fonts/PlanetKosmos.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1C2526 0%, #000000 100%);
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1), rgba(28, 37, 38, 0.3));
+            opacity: 0.3;
+            animation: waterWave 10s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes waterWave {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #D4AF37 !important;
+            font-family: 'Planet Kosmos', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #E0E0E0 !important;
+            text-shadow: 0 0 10px #D4AF37;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        .contact-section {
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .contact-section h1 {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .contact-section p {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+
+        .contact-info p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin: 0.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .contact-info {
+                max-width: 90%;
+            }
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #D4AF37;
+        }
+
+        .contact-form label {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #D4AF37;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #E0E0E0;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .btn-primary {
+            background-color: #D4AF37;
+            color: #1C2526;
+            border: none;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+            font-family: 'Planet Kosmos', sans-serif;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #E0E0E0;
+            box-shadow: 0 0 15px #D4AF37;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            text-align: center;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Barbershop37</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="contact-section">
+        <h1 class="fade-in">Свяжитесь с нами</h1>
+        <p class="fade-in">Мы всегда рады помочь вам с выбором услуги или ответить на любые вопросы. Запишитесь на стрижку или просто приходите познакомиться — мы ждем вас!</p>
+        <div class="contact-info fade-in">
+            <p><strong>Адрес:</strong> ул. Мневники, 21, Москва</p>
+            <p><strong>Телефон:</strong> +7 (495) 123-45-67</p>
+            <p><strong>Email:</strong> info@barbershop37.ru</p>
+            <p><strong>Часы работы:</strong> Пн-Вс, 10:00–21:00</p>
+        </div>
+        <div class="contact-form fade-in">
+            <div>
+                <label for="name">Имя</label>
+                <input type="text" id="name" placeholder="Введите ваше имя" disabled>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Введите ваш email" disabled>
+            </div>
+            <div>
+                <label for="message">Сообщение</label>
+                <textarea id="message" placeholder="Ваше сообщение" disabled></textarea>
+            </div>
+            <button class="btn btn-primary" disabled>Отправить</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Barbershop37. Все права защищены.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
