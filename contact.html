@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5">
     <title>Контакты - Barbershop37</title>
+    <!-- Подключаем Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Подключаем шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         @font-face {
@@ -43,6 +45,7 @@
             100% { background-position: 200% 50%; }
         }
 
+        /* Стили навигации с исправлениями для бургер-меню */
         .navbar {
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
@@ -62,6 +65,18 @@
         .nav-link:hover {
             color: #E0E0E0 !important;
             text-shadow: 0 0 10px #D4AF37;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28212, 175, 55, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end;
         }
 
         .fade-in {
@@ -101,86 +116,196 @@
             display: block;
         }
 
-        /* НОВЫЕ СТИЛИ ДЛЯ ФОРМЫ */
+        /* Стили формы */
         .tg-form-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 2rem auto;
             padding: 2rem;
-            background: rgba(28, 37, 38, 0.7);
-            border-radius: 10px;
-            border: 1px solid #D4AF37;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-            animation: fadeIn 1s ease-in-out forwards;
+            background: rgba(28, 37, 38, 0.8);
+            border-radius: 15px;
+            border: 2px solid #D4AF37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            font-family: 'Roboto', sans-serif;
         }
 
         .tg-form-container h2 {
             font-family: 'Planet Kosmos', sans-serif;
             color: #D4AF37;
+            text-align: center;
             margin-bottom: 1.5rem;
-            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
 
-        #tgForm {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
+        .contact-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        #tgForm input,
-        #tgForm textarea {
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #D4AF37;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
             width: 100%;
             padding: 0.8rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #D4AF37;
-            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid #444;
+            border-radius: 8px;
             color: #E0E0E0;
             font-size: 1rem;
             transition: all 0.3s ease;
         }
 
-        #tgForm input:focus,
-        #tgForm textarea:focus {
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
-            border-color: #E0E0E0;
+            border-color: #D4AF37;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
 
-        #tgForm textarea {
+        .form-group textarea {
             min-height: 120px;
             resize: vertical;
         }
 
-        #tgForm button[type="submit"] {
+        .services-section {
+            margin: 2rem 0;
+        }
+
+        .services-section h3 {
+            color: #D4AF37;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .service-option {
+            display: block;
+            cursor: pointer;
+        }
+
+        .service-option input[type="checkbox"] {
+            display: none;
+        }
+
+        .service-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #3a3a3a;
+            border-radius: 10px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .service-card:hover {
+            border-color: #D4AF37;
+        }
+
+        .service-card h4 {
+            color: #D4AF37;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .service-card p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            min-height: 40px;
+        }
+
+        .service-price {
+            color: #E0E0E0;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 0.8rem;
+        }
+
+        .service-option input[type="checkbox"]:checked + .service-card {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
             background-color: #D4AF37;
             color: #1C2526;
             border: none;
-            padding: 0.8rem;
+            border-radius: 8px;
             font-family: 'Planet Kosmos', sans-serif;
-            font-size: 1.1rem;
-            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 0.5rem;
+            margin-top: 1rem;
         }
 
-        #tgForm button[type="submit"]:hover {
+        .submit-btn:hover {
             background-color: #E0E0E0;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            transform: none;
+            box-shadow: none;
         }
 
         #result {
             margin-top: 1.5rem;
-            font-size: 1rem;
-            min-height: 24px;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
         }
 
-        /* Адаптивность */
+        .success {
+            background-color: rgba(46, 125, 50, 0.3);
+            color: #a5d6a7;
+            border: 1px solid #2e7d32;
+            display: block;
+        }
+
+        .error {
+            background-color: rgba(198, 40, 40, 0.3);
+            color: #ffabab;
+            border: 1px solid #c62828;
+            display: block;
+        }
+
         @media (max-width: 768px) {
-            .contact-info,
+            .contact-fields {
+                grid-template-columns: 1fr;
+            }
+            
             .tg-form-container {
-                max-width: 90%;
                 padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .service-options {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -199,7 +324,8 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <!-- Навигация с исправленным бургер-меню -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="index.html">Barbershop37</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -235,212 +361,10 @@
             <p><strong>Часы работы:</strong> Пн-Вс, 10:00–21:00</p>
         </div>
 
-        <style>
-            /* Основные стили формы */
-            .tg-form-container {
-                max-width: 800px;
-                margin: 2rem auto;
-                padding: 2rem;
-                background: rgba(28, 37, 38, 0.8);
-                border-radius: 15px;
-                border: 2px solid #D4AF37;
-                box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-                font-family: 'Roboto', sans-serif;
-            }
-    
-            .tg-form-container h2 {
-                font-family: 'Planet Kosmos', sans-serif;
-                color: #D4AF37;
-                text-align: center;
-                margin-bottom: 1.5rem;
-                font-size: 1.8rem;
-                text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-            }
-    
-            /* Стили для контактных полей */
-            .contact-fields {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-    
-            .form-group {
-                margin-bottom: 1rem;
-            }
-    
-            .form-group label {
-                display: block;
-                margin-bottom: 0.5rem;
-                color: #D4AF37;
-                font-weight: 500;
-            }
-    
-            .form-group input,
-            .form-group textarea {
-                width: 100%;
-                padding: 0.8rem;
-                background: rgba(0, 0, 0, 0.4);
-                border: 1px solid #444;
-                border-radius: 8px;
-                color: #E0E0E0;
-                font-size: 1rem;
-                transition: all 0.3s ease;
-            }
-    
-            .form-group input:focus,
-            .form-group textarea:focus {
-                outline: none;
-                border-color: #D4AF37;
-                box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-            }
-    
-            .form-group textarea {
-                min-height: 120px;
-                resize: vertical;
-            }
-    
-            /* Стили для выбора услуг */
-            .services-section {
-                margin: 2rem 0;
-            }
-    
-            .services-section h3 {
-                color: #D4AF37;
-                margin-bottom: 1rem;
-                font-size: 1.3rem;
-                text-align: center;
-            }
-    
-            .service-options {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1.2rem;
-            }
-    
-            .service-option {
-                display: block;
-                cursor: pointer;
-            }
-    
-            .service-option input[type="checkbox"] {
-                display: none;
-            }
-    
-            .service-card {
-                background: rgba(0, 0, 0, 0.3);
-                border: 2px solid #3a3a3a;
-                border-radius: 10px;
-                padding: 1.2rem;
-                transition: all 0.3s ease;
-                height: 100%;
-            }
-    
-            .service-card:hover {
-                border-color: #D4AF37;
-            }
-    
-            .service-card h4 {
-                color: #D4AF37;
-                margin: 0 0 0.5rem 0;
-                font-size: 1.1rem;
-            }
-    
-            .service-card p {
-                color: #b0b0b0;
-                font-size: 0.9rem;
-                margin: 0.5rem 0;
-                min-height: 40px;
-            }
-    
-            .service-price {
-                color: #E0E0E0;
-                font-weight: bold;
-                font-size: 1.1rem;
-                margin-top: 0.8rem;
-            }
-    
-            .service-option input[type="checkbox"]:checked + .service-card {
-                border-color: #D4AF37;
-                background: rgba(212, 175, 55, 0.1);
-                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            }
-    
-            /* Стили кнопки */
-            .submit-btn {
-                width: 100%;
-                padding: 1rem;
-                background-color: #D4AF37;
-                color: #1C2526;
-                border: none;
-                border-radius: 8px;
-                font-family: 'Planet Kosmos', sans-serif;
-                font-size: 1.2rem;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                margin-top: 1rem;
-            }
-    
-            .submit-btn:hover {
-                background-color: #E0E0E0;
-                transform: translateY(-2px);
-                box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
-            }
-    
-            .submit-btn:disabled {
-                opacity: 0.7;
-                transform: none;
-                box-shadow: none;
-            }
-    
-            /* Сообщение о результате */
-            #result {
-                margin-top: 1.5rem;
-                padding: 1rem;
-                border-radius: 8px;
-                text-align: center;
-                font-weight: 500;
-                display: none;
-            }
-    
-            .success {
-                background-color: rgba(46, 125, 50, 0.3);
-                color: #a5d6a7;
-                border: 1px solid #2e7d32;
-                display: block;
-            }
-    
-            .error {
-                background-color: rgba(198, 40, 40, 0.3);
-                color: #ffabab;
-                border: 1px solid #c62828;
-                display: block;
-            }
-    
-            /* Адаптивность */
-            @media (max-width: 768px) {
-                .contact-fields {
-                    grid-template-columns: 1fr;
-                }
-                
-                .tg-form-container {
-                    padding: 1.5rem;
-                    margin: 1rem;
-                }
-                
-                .service-options {
-                    grid-template-columns: 1fr;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="tg-form-container">
+        <div class="tg-form-container fade-in">
             <h2>Онлайн запись</h2>
             
             <form id="tgForm">
-                <!-- Контактные поля -->
                 <div class="contact-fields">
                     <div class="form-group">
                         <label for="name">Ваше имя *</label>
@@ -453,18 +377,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Телеграмм ID *</label>
+                        <label for="ID">Телеграмм ID *</label>
                         <input type="text" id="ID" name="ID" required>
                     </div>
-
                 </div>
                 
-                <!-- Выбор услуг -->
                 <div class="services-section">
                     <h3>Выберите услуги:</h3>
                     
                     <div class="service-options">
-                        <!-- Услуга 1 -->
                         <label class="service-option">
                             <input type="checkbox" name="service" value="Классическая стрижка (1500 ₽)">
                             <div class="service-card">
@@ -474,7 +395,6 @@
                             </div>
                         </label>
                         
-                        <!-- Услуга 2 -->
                         <label class="service-option">
                             <input type="checkbox" name="service" value="Стрижка + укладка (2000 ₽)">
                             <div class="service-card">
@@ -484,17 +404,15 @@
                             </div>
                         </label>
                         
-                        <!-- Услуга 3 -->
                         <label class="service-option">
-                            <input type="checkbox" name="service" value="Бритье бороды (1000 ₽)">
+                            <input type="checkbox" name="service" value="Бритье борды (1000 ₽)">
                             <div class="service-card">
-                                <h4>Бритье бороды</h4>
-                                <p>Точное бритье и оформление бороды</p>
+                                <h4>Бритье борды</h4>
+                                <p>Точное бритье и оформление борды</p>
                                 <div class="service-price">1000 ₽</div>
                             </div>
                         </label>
                         
-                        <!-- Услуга 4 -->
                         <label class="service-option">
                             <input type="checkbox" name="service" value="Детская стрижка (800 ₽)">
                             <div class="service-card">
@@ -504,7 +422,6 @@
                             </div>
                         </label>
                         
-                        <!-- Услуга 5 -->
                         <label class="service-option">
                             <input type="checkbox" name="service" value="Уход за волосами (1200 ₽)">
                             <div class="service-card">
@@ -514,7 +431,6 @@
                             </div>
                         </label>
                         
-                        <!-- Услуга 6 -->
                         <label class="service-option">
                             <input type="checkbox" name="service" value="Окрашивание (2500 ₽)">
                             <div class="service-card">
@@ -526,7 +442,6 @@
                     </div>
                 </div>
                 
-                <!-- Дополнительное сообщение -->
                 <div class="form-group">
                     <label for="message">Ваши пожелания или комментарии</label>
                     <textarea id="message" name="message" placeholder="Например, удобное время или особенности стрижки..."></textarea>
@@ -536,90 +451,87 @@
                 <div id="result"></div>
             </form>
         </div>
-    
-        <script>
-            document.getElementById('tgForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const form = e.target;
-                const submitBtn = form.querySelector('.submit-btn');
-                const resultDiv = document.getElementById('result');
-                
-                // Проверка выбора хотя бы одной услуги
-                const selectedServices = form.querySelectorAll('input[name="service"]:checked');
-                if (selectedServices.length === 0) {
-                    resultDiv.textContent = 'Пожалуйста, выберите хотя бы одну услугу';
-                    resultDiv.className = 'error';
-                    resultDiv.style.display = 'block';
-                    return;
-                }
-                
-                // Подготовка данных
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
-                
-                // Формируем текст сообщения
-                let servicesText = "Выбранные услуги:\n";
-                selectedServices.forEach(service => {
-                    servicesText += `• ${service.value}\n`;
-                });
-                
-                const messageText = `✂️ <b>Новая запись в Barbershop37</b>\n\n` +
-                                   `👤 <b>Имя:</b> ${data.name}\n` +
-                                   `📱 <b>Телефон:</b> ${data.phone}\n` +
-                                   `✈️ <b>Телеграмм ID:</b> ${data.ID}\n\n` +
-                                   `${servicesText}\n` +
-                                   `💬 <b>Пожелания:</b> ${data.message || '—'}`;
-                
-                // Настройки Telegram
-                const botToken = '7640965702:AAEDq5X3IthGjXoF1REtOpzqV3RuNByrp70';
-                const chatId = '-4741180688';
-                
-                // Изменяем состояние кнопки
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Отправка...';
-                resultDiv.style.display = 'none';
-                
-                try {
-                    // Отправка в Telegram
-                    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: chatId,
-                            text: messageText,
-                            parse_mode: 'HTML'
-                        })
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (result.ok) {
-                        resultDiv.textContent = 'Спасибо! Ваша запись отправлена. Мы скоро свяжемся с вами для подтверждения.';
-                        resultDiv.className = 'success';
-                        form.reset();
-                        
-                        // Сброс выбранных услуг
-                        document.querySelectorAll('input[name="service"]').forEach(checkbox => {
-                            checkbox.checked = false;
-                        });
-                    } else {
-                        resultDiv.textContent = 'Ошибка отправки. Пожалуйста, попробуйте позже или свяжитесь с нами по телефону.';
-                        resultDiv.className = 'error';
-                    }
-                } catch (error) {
-                    resultDiv.textContent = 'Ошибка сети. Проверьте подключение к интернету и попробуйте снова.';
-                    resultDiv.className = 'error';
-                    console.error('Ошибка:', error);
-                } finally {
-                    resultDiv.style.display = 'block';
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Записаться';
-                }
-            });
-        </script>
+    </section>
 
     <footer>
         <p>© 2025 Barbershop37. Все права защищены.</p>
     </footer>
+
+    <!-- Подключаем Bootstrap JS для работы бургер-меню -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <script>
+        document.getElementById('tgForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            const resultDiv = document.getElementById('result');
+            
+            const selectedServices = form.querySelectorAll('input[name="service"]:checked');
+            if (selectedServices.length === 0) {
+                resultDiv.textContent = 'Пожалуйста, выберите хотя бы одну услугу';
+                resultDiv.className = 'error';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            let servicesText = "Выбранные услуги:\n";
+            selectedServices.forEach(service => {
+                servicesText += `• ${service.value}\n`;
+            });
+            
+            const messageText = `✂️ <b>Новая запись в Barbershop37</b>\n\n` +
+                               `👤 <b>Имя:</b> ${data.name}\n` +
+                               `📱 <b>Телефон:</b> ${data.phone}\n` +
+                               `✈️ <b>Телеграмм ID:</b> ${data.ID}\n\n` +
+                               `${servicesText}\n` +
+                               `💬 <b>Пожелания:</b> ${data.message || '—'}`;
+            
+            const botToken = '7640965702:AAEDq5X3IthGjXoF1REtOpzqV3RuNByrp70';
+            const chatId = '-4741180688';
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Отправка...';
+            resultDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: messageText,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    resultDiv.textContent = 'Спасибо! Ваша запись отправлена. Мы скоро свяжемся с вами для подтверждения.';
+                    resultDiv.className = 'success';
+                    form.reset();
+                    
+                    document.querySelectorAll('input[name="service"]').forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                } else {
+                    resultDiv.textContent = 'Ошибка отправки. Пожалуйста, попробуйте позже или свяжитесь с нами по телефону.';
+                    resultDiv.className = 'error';
+                }
+            } catch (error) {
+                resultDiv.textContent = 'Ошибка сети. Проверьте подключение к интернету и попробуйте снова.';
+                resultDiv.className = 'error';
+                console.error('Ошибка:', error);
+            } finally {
+                resultDiv.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Записаться';
+            }
+        });
+    </script>
 </body>
 </html>
