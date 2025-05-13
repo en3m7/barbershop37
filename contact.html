@@ -451,6 +451,12 @@
                         <label for="phone">Телефон *</label>
                         <input type="tel" id="phone" name="phone" required>
                     </div>
+
+                    <div class="form-group">
+                        <label for="phone">Телеграмм ID *</label>
+                        <input type="text" id="ID" name="ID" required>
+                    </div>
+
                 </div>
                 
                 <!-- Выбор услуг -->
@@ -559,7 +565,8 @@
                 
                 const messageText = `✂️ <b>Новая запись в Barbershop37</b>\n\n` +
                                    `👤 <b>Имя:</b> ${data.name}\n` +
-                                   `📱 <b>Телефон:</b> ${data.phone}\n\n` +
+                                   `📱 <b>Телефон:</b> ${data.phone}\n` +
+                                   `✈️ <b>Телеграмм ID:</b> ${data.ID}\n\n` +
                                    `${servicesText}\n` +
                                    `💬 <b>Пожелания:</b> ${data.message || '—'}`;
                 
@@ -610,5 +617,9 @@
                 }
             });
         </script>
+
+    <footer>
+        <p>© 2025 Barbershop37. Все права защищены.</p>
+    </footer>
 </body>
 </html>
