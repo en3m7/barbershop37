@@ -1,22 +1,3 @@
-// Firebase конфигурация
-const firebaseConfig = {
-    apiKey: "your-api-key",
-    authDomain: "your-auth-domain",
-    projectId: "your-project-id",
-    storageBucket: "your-storage-bucket",
-    messagingSenderId: "your-messaging-sender-id",
-    appId: "your-app-id"
-};
-
-// Инициализация Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-// Telegram Bot конфигурация
-const TELEGRAM_BOT_TOKEN = 'your-telegram-bot-token';
-const TELEGRAM_CHAT_ID = 'your-telegram-chat-id';
-
 // Функция для отправки сообщения в Telegram
 async function sendToTelegram(message) {
     const url = `https://api.telegram.org/bot7640965702:AAEDq5X3IthGjXoF1REtOpzqV3RuNByrp70/sendMessage`;
@@ -139,40 +120,7 @@ function updateProgressBar() {
     progress.style.width = `${filled}%`;
 }
 
-// Обработка формы на contact.html
-function handleContactForm() {
-    const form = document.querySelector('.contact-section form');
-    if (form) {
-        form.addEventListener('input', updateProgressBar);
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.querySelector('#name').value;
-            const email = document.querySelector('#email').value;
-            const message = document.querySelector('#message').value;
 
-            // Сохранение в Firestore
-            try {
-                await db.collection('contacts').add({
-                    name,
-                    email,
-                    message,
-                    created: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                // Отправка в Telegram
-                const telegramMessage = `<b>Новая заявка:</b>\nИмя: ${name}\nEmail: ${email}\nСообщение: ${message}`;
-                await sendToTelegram(telegramMessage);
-
-                alert('Сообщение отправлено!');
-                form.reset();
-                updateProgressBar();
-            } catch (error) {
-                console.error('Ошибка:', error);
-                alert('Произошла ошибка при отправке.');
-            }
-        });
-    }
-}
 
 // Инициализация всех функций при загрузке
 document.addEventListener('DOMContentLoaded', () => {
