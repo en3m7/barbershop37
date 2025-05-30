@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5">
+    <title>Социальные сети - Barbershop37</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    
+    <style>
+        @font-face {
+            font-family: 'Planet Kosmos';
+            src: url('fonts/PlanetKosmos.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1C2526 0%, #000000 100%);
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #D4AF37 !important;
+            font-family: 'Planet Kosmos', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            transition: color 0.3s ease;
+        }
+
+        .social-section {
+            padding: 3rem 1rem;
+            flex: 1;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .social-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .telegram { color: #0088cc; }
+        .vk { color: #4a76a8; }
+        .instagram { color: #e1306c; }
+        .whatsapp { color: #25D366; }
+
+        .social-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #D4AF37;
+            color: #1C2526;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: #E0E0E0;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Barbershop37</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Контакты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="social.html">Соцсети</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="social-section">
+        <div class="container">
+            <h1 class="text-center mb-5" style="font-family: 'Planet Kosmos', sans-serif; color: #D4AF37;">Мы в социальных сетях</h1>
+            
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="social-card text-center">
+                        <div class="social-icon telegram">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <h3>Telegram</h3>
+                        <p>Быстрые ответы на вопросы, запись на услуги и специальные предложения для подписчиков</p>
+                        <a href="https://t.me/en3m7" class="social-link" target="_blank">Перейти</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="social-card text-center">
+                        <div class="social-icon vk">
+                            <i class="fab fa-vk"></i>
+                        </div>
+                        <h3>ВКонтакте</h3>
+                        <p>Личный Аккаунт владельца, только важные и влажные вопросы</p>
+                        <a href="https://vk.com/leanovkolyan" class="social-link" target="_blank">Перейти</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="social-card text-center">
+                        <div class="social-icon instagram">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <h3>Instagram</h3>
+                        <p>Стильные образы наших клиентов, видео процесса стрижки и работы мастеров</p>
+                        <a href="ig.html" class="social-link" target="_blank">Перейти</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="social-card text-center">
+                        <div class="social-icon whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3>WhatsApp</h3>
+                        <p>Бронирование времени, консультации и напоминания о записи</p>
+                        <a href="https://wa.me/78120373737" class="social-link" target="_blank">Перейти</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <h3 style="color: #D4AF37;">Подпишитесь на нас!</h3>
+                <p>Будьте в курсе всех акций и новостей нашего барбершопа</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Barbershop37. Все права защищены.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
