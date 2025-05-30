@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5">
+    <title>О нас - Barbershop37</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <style>
+        @font-face {
+            font-family: 'Planet Kosmos';
+            src: url('fonts/PlanetKosmos.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1C2526 0%, #000000 100%);
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1), rgba(28, 37, 38, 0.3));
+            opacity: 0.3;
+            animation: waterWave 10s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes waterWave {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #D4AF37 !important;
+            font-family: 'Planet Kosmos', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #E0E0E0 !important;
+            text-shadow: 0 0 10px #D4AF37;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        .about-section {
+            padding: 3rem 1rem;
+        }
+
+        .about-section h1 {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .about-section p {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .accordion-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: #D4AF37;
+            font-family: 'Planet Kosmos', sans-serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            transition: background-color 0.3s ease;
+            position: relative;
+            padding-right: 3rem;
+        }
+
+        .accordion-button::after {
+            content: '+';
+            font-family: 'Planet Kosmos', sans-serif !important;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 400;
+            color: #D4AF37;
+            position: absolute;
+            right: 1rem;
+            transition: transform 0.3s ease;
+            background-image: none;
+            line-height: 1;
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            content: '−';
+            transform: rotate(180deg);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(212, 175, 55, 0.2);
+            color: #FFFFFF;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: #D4AF37;
+        }
+
+        .accordion-body {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .accordion-body img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 1.5rem;
+            border: 2px solid #D4AF37;
+        }
+
+        .accordion-body div {
+            flex: 1;
+        }
+
+        .accordion-body h3 {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion-body p {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin: 0;
+            color: #FFFFFF;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .mission-section {
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .mission-section h2 {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .mission-section p {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .divider {
+            width: 50%;
+            height: 2px;
+            background: #D4AF37;
+            margin: 2rem auto;
+            opacity: 0.7;
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; transform: scaleX(1); }
+            50% { opacity: 1; transform: scaleX(1.05); }
+            100% { opacity: 0.7; transform: scaleX(1); }
+        }
+
+        .reviews-section {
+            padding: 3rem 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .reviews-section h2 {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .review-card h4 {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .review-card p {
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            color: #E0E0E0;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            text-align: center;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Barbershop37</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html">Контакты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="social.html">Соцсети</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="about-section">
+        <h1 class="fade-in">О нас</h1>
+        <p class="fade-in">Barbershop37 — стиль и традиции в одном месте. Мы подчеркиваем вашу индивидуальность с помощью качественных стрижек и ухода. Наши мастера знают, как сделать ваш образ идеальным.</p>
+        <div class="accordion fade-in" id="mastersAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Иван
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#mastersAccordion">
+                    <div class="accordion-body">
+                        <img src="pics/master1.jpg" alt="Мастер 1">
+                        <div>
+                            <h3>Иван</h3>
+                            <p>Мастер классических стрижек.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Алексей
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#mastersAccordion">
+                    <div class="accordion-body">
+                        <img src="pics/master2.jpg" alt="Мастер 2">
+                        <div>
+                            <h3>Алексей</h3>
+                            <p>Специалист по бритью и укладкам.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Дмитрий
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#mastersAccordion">
+                    <div class="accordion-body">
+                        <img src="pics/master3.jpg" alt="Мастер 3">
+                        <div>
+                            <h3>Дмитрий</h3>
+                            <p>Эксперт по детским и креативным стрижкам.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="mission-section fade-in">
+        <h2>Наша миссия</h2>
+        <p>Мы стремимся сделать каждое посещение Barbershop37 незабываемым. Наша цель — не просто подстричь или побрить, а создать образ, который будет отражать вашу личность и стиль. Мы ценим традиции, но всегда идем в ногу со временем, используя современные техники и подходы.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="reviews-section fade-in">
+        <h2>Что говорят наши клиенты</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="review-card">
+                    <h4>Михаил</h4>
+                    <p>Отличный барбершоп! Иван сделал идеальную стрижку, теперь я постоянный клиент. Атмосфера просто невероятная — чувствуешь себя как дома.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="review-card">
+                    <h4>Сергей</h4>
+                    <p>Алексей — мастер своего дела. Борода выглядит идеально, а укладка держится весь день. Спасибо за профессионализм!</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="review-card">
+                    <h4>Антон</h4>
+                    <p>Привел сына к Дмитрию, результат превзошел ожидания. Ребенок доволен, а я рад, что нашел такой барбершоп. Рекомендую!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Barbershop37. Все права защищены.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

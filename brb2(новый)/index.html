@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5">
+    <title>Barbershop37</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <style>
+        @font-face {
+            font-family: 'Planet Kosmos';
+            src: url('fonts/PlanetKosmos.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1C2526 0%, #000000 100%);
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1), rgba(28, 37, 38, 0.3));
+            opacity: 0.3;
+            animation: waterWave 10s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes waterWave {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #D4AF37 !important;
+            font-family: 'Planet Kosmos', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #E0E0E0 !important;
+            text-shadow: 0 0 10px #D4AF37;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        .hero-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 1rem;
+            max-height: 50vh;
+        }
+
+        .hero-section h1 {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .hero-section p {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: #D4AF37;
+            color: #1C2526;
+            border: none;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+            font-family: 'Planet Kosmos', sans-serif;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #E0E0E0;
+            box-shadow: 0 0 15px #D4AF37;
+            transform: scale(1.05);
+        }
+
+        .carousel-section {
+            position: relative;
+            width: 100%;
+            max-height: 70vh;
+            overflow: hidden;
+            padding-bottom: 3rem;
+        }
+
+        .carousel-inner {
+            width: 100%;
+            max-height: 70vh;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+            border-radius: 0;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            filter: brightness(0) invert(1);
+        }
+
+        .gallery-button {
+            position: relative;
+            display: block;
+            margin: 1rem auto 0;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-button:hover {
+            transform: scale(1.1);
+        }
+
+        .modal-content {
+            background: rgba(28, 37, 38, 0.9);
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        /* Новые стили для мастеров */
+        .masters-section {
+            padding: 3rem 1rem;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .master-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .master-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .master-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .master-info {
+            padding: 1.5rem;
+        }
+
+        .master-name {
+            font-family: 'Planet Kosmos', sans-serif;
+            color: #D4AF37;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .master-specialty {
+            color: #E0E0E0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .master-specialty i {
+            margin-right: 0.5rem;
+            color: #D4AF37;
+        }
+
+        /* Стили для таблицы цен */
+        .pricing-section {
+            padding: 3rem 1rem;
+        }
+
+        .pricing-table {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .pricing-table th {
+            background-color: rgba(212, 175, 55, 0.2);
+            color: #D4AF37;
+            font-family: 'Planet Kosmos', sans-serif;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .pricing-table td {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .pricing-table tr:hover {
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .price-value {
+            color: #D4AF37;
+            font-weight: bold;
+        }
+
+        /* Стили для отзывов */
+        .reviews-section {
+            padding: 3rem 1rem;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 2px solid #D4AF37;
+        }
+
+        .review-author {
+            font-weight: bold;
+            color: #D4AF37;
+        }
+
+        .review-date {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .review-rating {
+            color: #D4AF37;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Улучшенный баннер скидки */
+        .discount-banner {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #d4af37;
+            color: #000;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+            transform-origin: center;
+            transition: all 0.3s ease;
+            max-width: 250px;
+        }
+
+        .discount-banner:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0,0,0,0.7);
+        }
+
+        .discount-content h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .discount-content p {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .discount-content button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .discount-content button:hover {
+            background-color: #333;
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            text-align: center;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .carousel-item img {
+                height: 40vh;
+            }
+            .carousel-inner {
+                max-height: 40vh;
+            }
+            .carousel-section {
+                max-height: 40vh;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .carousel-item img {
+                height: 30vh;
+            }
+            .carousel-inner {
+                max-height: 30vh;
+            }
+            .carousel-section {
+                max-height: 30vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Barbershop37</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Контакты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="social.html">Соцсети</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <h1 class="fade-in">Добро пожаловать в Barbershop37</h1>
+        <p class="fade-in">Мы создаем стильные образы для настоящих мужчин, сочетая качество, традиции и современные техники. Наши мастера помогут вам подчеркнуть индивидуальность и почувствовать себя на высоте.</p>
+        <a href="contact.html" class="btn btn-primary fade-in">Записаться</a>
+    </section>
+
+    <section class="carousel-section">
+        <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="pics/gallery1.jpg" class="d-block" alt="Галерея 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="pics/gallery2.jpg" class="d-block" alt="Галерея 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="pics/gallery3.jpg" class="d-block" alt="Галерея 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="pics/gallery4.jpg" class="d-block" alt="Галерея 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="pics/gallery5.jpg" class="d-block" alt="Галерея 5">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <button class="btn btn-primary gallery-button" data-bs-toggle="modal" data-bs-target="#fullScreenGallery">Открыть галерею</button>
+    </section>
+
+    <!-- Новый раздел: Наши мастера -->
+    <section class="masters-section">
+        <h2 class="text-center fade-in" style="font-family: 'Planet Kosmos', sans-serif; color: #D4AF37; margin-bottom: 2rem;">Наши лучшиие мастера</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="master-card fade-in">
+                        <img src="pics/master1.jpg" alt="Мастер Иван" class="master-img">
+                        <div class="master-info">
+                            <h3 class="master-name">Иван</h3>
+                            <div class="master-specialty">
+                                <i class="fas fa-cut"></i>
+                                <span>Стрижки, укладки</span>
+                            </div>
+                            <p>Опыт работы: 7 лет. Специалист по классическим и современным стрижкам.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="master-card fade-in">
+                        <img src="pics/master2.jpg" alt="Мастер Алексей" class="master-img">
+                        <div class="master-info">
+                            <h3 class="master-name">Алексей</h3>
+                            <div class="master-specialty">
+                                <i class="fas fa-shower"></i>
+                                <span>Бритье, уход за бородой</span>
+                            </div>
+                            <p>Опыт работы: 5 лет. Мастер точного бритья и оформления бороды.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="master-card fade-in">
+                        <img src="pics/master3.jpg" alt="Мастер Дмитрий" class="master-img">
+                        <div class="master-info">
+                            <h3 class="master-name">Дмитрий</h3>
+                            <div class="master-specialty">
+                                <i class="fas fa-child"></i>
+                                <span>Детские стрижки</span>
+                            </div>
+                            <p>Опыт работы: 4 года. Специалист по работе с детьми и креативным стрижкам.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Новый раздел: Таблица цен -->
+    <section class="pricing-section">
+        <h2 class="text-center fade-in" style="font-family: 'Planet Kosmos', sans-serif; color: #D4AF37; margin-bottom: 2rem;">Наши цены</h2>
+        <div class="container">
+            <div class="table-responsive fade-in">
+                <table class="table pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Услуга</th>
+                            <th>Описание</th>
+                            <th>Цена</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Мужская стрижка</td>
+                            <td>Классическая или современная стрижка</td>
+                            <td class="price-value">1500 ₽</td>
+                        </tr>
+                        <tr>
+                            <td>Детская стрижка</td>
+                            <td>Для мальчиков до 12 лет</td>
+                            <td class="price-value">1200 ₽</td>
+                        </tr>
+                        <tr>
+                            <td>Бритье головы</td>
+                            <td>С использованием профессиональных средств</td>
+                            <td class="price-value">1000 ₽</td>
+                        </tr>
+                        <tr>
+                            <td>Оформление бороды</td>
+                            <td>Стрижка и укладка бороды</td>
+                            <td class="price-value">800 ₽</td>
+                        </tr>
+                        <tr>
+                            <td>Комплекс "Премиум"</td>
+                            <td>Стрижка + бритье + уход за бородой</td>
+                            <td class="price-value">3000 ₽</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Новый раздел: Отзывы -->
+    <section class="reviews-section">
+        <h2 class="text-center fade-in" style="font-family: 'Planet Kosmos', sans-serif; color: #D4AF37; margin-bottom: 2rem;">Отзывы клиентов</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="review-card fade-in">
+                        <div class="review-header">
+                            <img src="pics/client1.jpg" alt="Клиент" class="review-avatar">
+                            <div>
+                                <div class="review-author">Михаил</div>
+                                <div class="review-date">15 мая 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>Отличный барбершоп! Иван сделал идеальную стрижку, теперь я постоянный клиент. Атмосфера просто невероятная — чувствуешь себя как дома.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="review-card fade-in">
+                        <div class="review-header">
+                            <img src="pics/client2.jpg" alt="Клиент" class="review-avatar">
+                            <div>
+                                <div class="review-author">Сергей</div>
+                                <div class="review-date">10 мая 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>Алексей — мастер своего дела. Борода выглядит идеально, а укладка держится весь день. Спасибо за профессионализм!</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="review-card fade-in">
+                        <div class="review-header">
+                            <img src="pics/client3.jpg" alt="Клиент" class="review-avatar">
+                            <div>
+                                <div class="review-author">Антон</div>
+                                <div class="review-date">5 мая 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>Привел сына к Дмитрию, результат превзошел ожидания. Ребенок доволен, а я рад, что нашел такой барбершоп. Рекомендую!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно для полноэкранной галереи -->
+    <div class="modal fade" id="fullScreenGallery" tabindex="-1" aria-labelledby="fullScreenGalleryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fullScreenGalleryLabel" style="color: #D4AF37; font-family: 'Planet Kosmos', sans-serif;">Галерея Barbershop37</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: brightness(0) invert(1);"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="fullScreenCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="pics/gallery1.jpg" class="d-block" alt="Галерея 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="pics/gallery2.jpg" class="d-block" alt="Галерея 2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="pics/gallery3.jpg" class="d-block" alt="Галерея 3">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="pics/gallery4.jpg" class="d-block" alt="Галерея 4">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="pics/gallery5.jpg" class="d-block" alt="Галерея 5">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#fullScreenCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <section class="why-choose-us fade-in">
+        <h2>Почему выбирают нас</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <h4>Профессионализм</h4>
+                    <p>Наши мастера — эксперты с многолетним опытом, которые знают все о мужском стиле.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <h4>Индивидуальный подход</h4>
+                    <p>Мы учитываем ваши пожелания и создаем образ, который идеально вам подходит.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <h4>Уютная атмосфера</h4>
+                    <p>У нас вы почувствуете себя как дома — расслабьтесь и доверьтесь профессионалам.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="map-section fade-in">
+        <h2 class="text-center mb-4" style="font-family: 'Planet Kosmos', sans-serif; color: #D4AF37; font-size: clamp(1.5rem, 3vw, 2.5rem); text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);">Где нас найти</h2>
+        <div id="map">
+            <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2244.1301263362484!2d37.4813281!3d55.7736118!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b5491a5ac36959%3A0x7ad5aa871203b912!2z0YPQuy4g0JzQvdGR0LLQvdC40LrQuCwgMjEsINCc0L7RgdC60LLQsCwgMTIzNDIz!5e0!3m2!1sru!2sru!4v1748240946040!5m2!1sru!2sru" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    
+    <footer>
+        <p>© 2025 Barbershop37. Все права защищены.</p>
+    </footer>
+
+    <!-- Баннер скидки -->
+    <div class="discount-banner">
+        <div class="discount-content">
+            <h3>Специальное предложение!</h3>
+            <p>Первая запись онлайн - скидка 10%</p>
+            <button onclick="location.href='contact.html'">Записаться со скидкой</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+    <script>
+        // Настройка интервала для карусели (3 секунды)
+        const carousel = document.querySelector('#galleryCarousel');
+        if (carousel) {
+            const bsCarousel = new bootstrap.Carousel(carousel, {
+                interval: 3000,
+                wrap: true
+            });
+        }
+
+        // Инициализация карты
+        const map = L.map('map').setView([55.7759, 37.4807], 15); // Координаты: Мневники, 21, Москва
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        L.marker([55.7759, 37.4807]).addTo(map)
+            .bindPopup('Barbershop37<br>ул. Мневники, 21, Москва')
+            .openPopup();
+
+        // Настройка интервала для полноэкранной карусели (5 секунд)
+        const fullScreenCarousel = document.querySelector('#fullScreenCarousel');
+        if (fullScreenCarousel) {
+            const bsFullScreenCarousel = new bootstrap.Carousel(fullScreenCarousel, {
+                interval: 5000,
+                wrap: true
+            });
+        }
+
+        // Анимация появления элементов при скролле
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = '1';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', fadeInOnScroll);
+        window.addEventListener('load', fadeInOnScroll);
+    </script>
+</body>
+</html>
